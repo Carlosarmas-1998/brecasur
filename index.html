@@ -41,15 +41,15 @@
     body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
     img { max-width: 100%; display: block; object-fit: cover; }
     a { text-decoration: none; color: inherit; }
-    button, input, select, textarea { font: inherit; }
+    button, select, textarea { font: inherit; }
 
     .container { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
 
-    /* SISTEMA DE VISTAS (PANTALLAS) - CORREGIDO */
+    /* SISTEMA DE VISTAS (PANTALLAS) */
     .view-section { display: none; min-height: 100vh; opacity: 0; transition: opacity 0.4s ease; }
     .view-section.active { opacity: 1; }
 
-    /* CAPA OSCURA PARA LAS SUB-PÁGINAS (SIN IMAGEN DE FONDO) */
+    /* CAPA OSCURA PARA LAS SUB-PÁGINAS */
     .subpage-bg {
       background: #000000; /* NEGRO SÓLIDO TOTAL */
       min-height: 100vh;
@@ -84,6 +84,7 @@
     .subtitle { font-size: 14px; color: #ddd; margin-bottom: 10px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase;}
     h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 5.5rem); line-height: 1.05; margin-bottom: 15px; color: #fff; letter-spacing: 1px;}
     .hero-desc { max-width: 760px; margin: 0 auto 50px; color: #ccc; font-size: 1.1rem; line-height: 1.6;}
+    .location { display: inline-block; margin: 0 auto 40px; padding: 12px 20px; background: #0a0a0a; border: 1px solid #333; border-radius: 999px; color: #fff; font-size: 12px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;}
 
     /* BOTONES SÚPER PRO (TOTAL BLACK) */
     .hero-action-grid { display: flex; gap: 12px; justify-content: center; width: 100%; max-width: 900px; margin: 0 auto; flex-wrap: wrap; } 
@@ -143,15 +144,23 @@
     .form-group { display: grid; gap: 6px; }
     label { font-size: 11px; color: #aaa; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;}
     
-    /* Evitar zoom en iOS Safari */
-    input, select, textarea { width: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 6px; background: #0a0a0a; color: #fff; font-size: 16px; outline: none; transition: 0.3s; appearance: none; -webkit-appearance: none;}
-    input:focus, select:focus, textarea:focus { border-color: #fff; background: #111; }
+    /* INPUTS SEPARADOS PARA EVITAR CONFLICTO CON CHECKBOX */
+    input[type="text"], input[type="tel"], input[type="date"], select, textarea { 
+      width: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 6px; background: #0a0a0a; color: #fff; font-size: 16px; outline: none; transition: 0.3s; appearance: none; -webkit-appearance: none;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus, input[type="date"]:focus, select:focus, textarea:focus { 
+      border-color: #fff; background: #111; 
+    }
     textarea { resize: vertical; min-height: 100px; }
     input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
 
     .privacy-box { display: grid; gap: 10px; padding: 20px; background: #111; border: 1px solid var(--line); border-radius: 8px; margin-top: 10px;}
     .check-wrap { display: flex; align-items: flex-start; gap: 12px; }
-    .check-wrap input { width: 18px; height: 18px; margin-top: 2px; accent-color: #fff; cursor: pointer; }
+    
+    /* ESTILO ESPECÍFICO DEL CHECKBOX PARA QUE SEA CLICKEABLE */
+    .check-wrap input[type="checkbox"] { 
+      appearance: auto; -webkit-appearance: auto; width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: #fff;
+    }
     .check-wrap label { font-size: 12px; font-weight: normal; color: #ccc; line-height: 1.6; cursor: pointer;}
 
     .btn-reserva { width: 100%; padding: 20px; font-size: 13px; letter-spacing: 3px; margin-top: 10px;}
@@ -189,10 +198,11 @@
     <div class="hero-overlay">
       <div class="container">
         <div class="hero-card">
-          <span class="eyebrow">Exclusividad en Marcovia</span>
           <div class="subtitle">Bar y Restaurante</div>
           <h1>Brecasur Marcovia</h1>
           <p class="hero-desc">Sabor, ambiente y buenos momentos en un solo lugar. Disfruta de una experiencia agradable con buena comida y atención cercana en el municipio de Marcovia.</p>
+
+          <div class="location">📍 Colonia Care, Renacer Marcovia, frente a plaza</div>
 
           <div class="hero-action-grid">
             <button class="btn btn-action-magic" data-target="view-reservas">RESERVA UNA MESA</button>
@@ -223,7 +233,7 @@
 
             <div class="address-box" style="margin-bottom: 20px;">
               <strong>Ubicación Oficial</strong>
-              <p style="margin-bottom: 15px;">7PR5+2GG Marcovia, Honduras.<br>Colonia Renacer, Frente al rótulo en Plaza Verde Oliva.</p>
+              <p style="margin-bottom: 15px;">Colonia Care, Renacer Marcovia, frente a plaza.</p>
               
               <button class="btn" onclick="window.location.href='https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras'" style="width: 100%; padding: 12px; font-size: 10px;">📍 CÓMO LLEGAR (MAPA)</button>
             </div>
@@ -254,18 +264,16 @@
                   <label for="r_personas">N.º de personas</label>
                   <select id="r_personas" required>
                     <option value="" disabled selected>Seleccione</option>
-                    <option value="1">1 Persona</option>
-                    <option value="2">2 Personas</option>
-                    <option value="3">3 Personas</option>
-                    <option value="4">4 Personas</option>
-                    <option value="5">5 Personas</option>
-                    <option value="6">6 Personas</option>
-                    <option value="7">7 Personas</option>
-                    <option value="8">8 Personas</option>
-                    <option value="9">9 Personas</option>
-                    <option value="10">10 Personas</option>
-                    <option value="11">11 Personas</option>
-                    <option value="12">12 Personas</option>
+                    <option value="1">1 </option>
+                    <option value="2">2 </option>
+                    <option value="3">3 </option>
+                    <option value="4">4 </option>
+                    <option value="5">5 </option>
+                    <option value="6">6 </option>
+                    <option value="7">7 </option>
+                    <option value="8">8 </option>
+                    <option value="9">9 </option>
+                    <option value="10">10 </option>
                   </select>
                 </div>
               </div>
@@ -318,7 +326,7 @@
             
             <div class="address-box">
               <strong>Nuestra Dirección</strong>
-              <p style="margin-bottom: 15px;">7PR5+2GG Marcovia, Honduras.<br>Colonia Renacer, Frente al rótulo en Plaza Verde Oliva.</p>
+              <p style="margin-bottom: 15px;">Colonia care, renacer marcovia, frente a plaza.</p>
               <button class="btn" onclick="window.location.href='https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras'" style="width: 100%; padding: 12px; font-size: 10px;">📍 CÓMO LLEGAR (MAPA)</button>
             </div>
           </div>
@@ -421,7 +429,7 @@
     const WHATSAPP_NUMBER = "50433224825";
 
     // ==========================================
-    // SISTEMA DE VISTAS Y TRANSICIÓN (CORREGIDO PARA IOS)
+    // SISTEMA DE VISTAS Y TRANSICIÓN
     // ==========================================
     const magicTransition = document.getElementById('magicTransition');
 
@@ -446,7 +454,6 @@
       const target = document.getElementById(viewId);
       if (target) {
         target.style.display = 'block';
-        // Un pequeño delay para que el navegador procese el display: block antes de animar
         setTimeout(() => target.classList.add('active'), 40);
       }
       
@@ -470,7 +477,7 @@
           if (targetView) {
             switchView(targetView);
           } else if (url) {
-            // FIX PARA APPLE / IOS: Usar window.location.href en lugar de window.open para evitar bloqueos
+            // FIX PARA APPLE / IOS
             window.location.href = url;
           }
         });
@@ -609,13 +616,12 @@
       }
 
       const fechaFormateada = formatDateForDisplay(fecha);
-      const mensaje = `Hola Brecasur Marcovia, deseo solicitar una reserva.\n\n🥂 Reserva\n👤 ${nombre}\n📞 ${tel}\n👥 ${personas}\n📅 ${fechaFormateada}\n🕒 ${hora}\n\nQuedo pendiente de confirmación.`;
+      const mensaje = `Hola Brecasur, deseo solicitar una reserva.\n\n🥂 Reserva\n👤 ${nombre}\n📞 ${tel}\n👥 ${personas}\n📅 ${fechaFormateada}\n🕒 ${hora}\n\nQuedo pendiente de confirmación.`;
       
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
 
       openSendingOverlay();
       setTimeout(() => {
-        // FIX PARA APPLE / IOS
         window.location.href = url;
         closeSendingOverlay();
       }, 1200);
@@ -654,13 +660,12 @@
         return;
       }
 
-      const mensaje = `Hola Brecasur Marcovia, mi nombre es ${nombre}.\n\nTe doy ${rating} estrellas de calificación, y te contacto porque: ${motivo}`;
+      const mensaje = `Hola Brecasur, mi nombre es ${nombre}.\n\nTe doy ${rating} estrellas de calificación, y te contacto porque: ${motivo}`;
 
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
 
       openSendingOverlay();
       setTimeout(() => {
-        // FIX PARA APPLE / IOS
         window.location.href = url;
         closeSendingOverlay();
         formContacto.reset();
