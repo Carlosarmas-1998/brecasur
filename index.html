@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Bar y Restaurante Brecasur | Marcovia</title>
+  <meta name="description" content="Bar y Restaurante Brecasur en Marcovia, Honduras. Reserva tu mesa y vive una experiencia gastronómica única." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    if (history.scrollRestoration) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    window.onload = function() {
+      window.scrollTo(0, 0);
+    };
+  </script>
+
+  <style>
+    :root {
+      --bg: #000000;
+      --card: #080808;
+      --text: #ffffff;
+      --muted: #a0a0a0;
+      --line: #222222;
+      --danger: #ff4d4f;
+      --gold: #C5A059;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    img { max-width: 100%; display: block; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    button, input, select, textarea { font: inherit; }
+
+    .container { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
+
+    /* SISTEMA DE VISTAS (PANTALLAS) - CORREGIDO */
+    .view-section { display: none; min-height: 100vh; opacity: 0; transition: opacity 0.4s ease; }
+    .view-section.active { opacity: 1; }
+
+    /* CAPA OSCURA PARA LAS SUB-PÁGINAS (SIN IMAGEN DE FONDO) */
+    .subpage-bg {
+      background: #000000; /* NEGRO SÓLIDO TOTAL */
+      min-height: 100vh;
+      padding: 60px 0;
+    }
+
+    /* BOTÓN VOLVER */
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px; color: #fff; background: transparent; border: 1px solid #555; padding: 12px 24px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-bottom: 40px; transition: 0.3s;
+    }
+    .btn-back:hover { background: #fff; color: #000; transform: translateX(-5px); }
+
+    /* CABECERAS Y TEXTOS */
+    .eyebrow { display: inline-block; padding: 8px 16px; border-radius: 999px; background: #111; color: #fff; border: 1px solid #333; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; font-weight: bold;}
+    .section-head { text-align: center; margin-bottom: 40px; }
+    .section-head h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; color: #fff; }
+    .section-head p { color: var(--muted); max-width: 760px; margin: 0 auto; font-size: 15px;}
+    
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
+
+    /* TRANSICIÓN DE CRISTAL (EFECTO RELOJ) */
+    .magic-transition { position: fixed; inset: 0; background: #000000; z-index: 100000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; color: #ffffff; }
+    .magic-transition.active { opacity: 1; pointer-events: all; }
+    .spinning-glass { font-size: 60px; margin-bottom: 25px; animation: spinClock 2s linear infinite; }
+    @keyframes spinClock { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .magic-text { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: bold; letter-spacing: 2px; text-align: center; text-transform: uppercase; }
+
+    /* HERO SECTION (LA ÚNICA CON IMAGEN DE FONDO) */
+    #view-home { background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url("bb.jpg") center/cover no-repeat fixed; }
+    .hero-overlay { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px 0; }
+    .hero-card { width: min(900px, 100%); padding: 30px 20px; text-align: center; background: transparent; }
+    .subtitle { font-size: 14px; color: #ddd; margin-bottom: 10px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase;}
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 5.5rem); line-height: 1.05; margin-bottom: 15px; color: #fff; letter-spacing: 1px;}
+    .hero-desc { max-width: 760px; margin: 0 auto 50px; color: #ccc; font-size: 1.1rem; line-height: 1.6;}
+
+    /* BOTONES SÚPER PRO (TOTAL BLACK) */
+    .hero-action-grid { display: flex; gap: 12px; justify-content: center; width: 100%; max-width: 900px; margin: 0 auto; flex-wrap: wrap; } 
+    
+    .btn { 
+      display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: #000000; color: #ffffff; border: 1px solid #555; text-align: center; letter-spacing: 1.5px;
+    }
+    .btn:hover { background: #ffffff; color: #000000; border-color: #ffffff; transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255, 255, 255, 0.15); }
+    .btn:active { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1); }
+    
+    .hero-action-grid .btn { flex: 1; padding: 18px 10px; font-size: 11px; min-width: 180px; }
+
+    @media (max-width: 600px) {
+      .hero-action-grid { gap: 10px; padding: 0; }
+      .hero-action-grid .btn { padding: 16px 5px; font-size: 10px; min-width: 45%; }
+    }
+
+    /* SECCIÓN CONTACTO Y UBICACIÓN */
+    .contact-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
+    @media (max-width: 900px) { .contact-layout { grid-template-columns: 1fr; } }
+
+    .contact-info { padding: 35px; background: #0a0a0a; border: 1px solid var(--line); border-radius: 12px;}
+    .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 26px; color: #fff; margin-bottom: 15px;}
+    .contact-info p { color: #ccc; margin-bottom: 25px; font-size: 14px; line-height: 1.8;}
+    
+    .address-box { padding: 20px; background: #111; border-left: 2px solid #fff; border-radius: 6px; }
+    .address-box strong { display: block; color: #fff; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; margin-bottom: 5px;}
+    .address-box p { margin: 0; color: #aaa; font-size: 13px;}
+
+    /* SISTEMA DE ESTRELLAS */
+    .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 8px; margin-bottom: 5px;}
+    .star-rating input { display: none; }
+    .star-rating label { font-size: 35px; color: #333; cursor: pointer; transition: 0.2s; }
+    .star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: var(--gold); }
+
+    /* GALERÍA MÁGICA */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; }
+    .gallery-item { position: relative; overflow: hidden; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow); aspect-ratio: 1/1; border: 1px solid var(--line); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .gallery-item::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); opacity: 0; transition: 0.3s; z-index: 1;}
+    .gallery-item:hover img { transform: scale(1.1); }
+    .gallery-item:hover::after { opacity: 1; }
+    .gallery-label { position: absolute; left: 15px; right: 15px; bottom: 15px; color: #fff; font-size: 14px; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 1px; z-index: 10; opacity: 0; transform: translateY(10px); transition: 0.4s;}
+    .gallery-item:hover .gallery-label { opacity: 1; transform: translateY(0); }
+
+    /* RESERVAS FORMULARIO */
+    .booking-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    @media (max-width: 900px) { .booking-layout { grid-template-columns: 1fr; } }
+    
+    .booking-info, .booking-form { padding: 35px; }
+    .booking-info h3, .booking-form h3 { font-family: 'Playfair Display', serif; margin-bottom: 15px; color: #fff; font-size: 28px; }
+    .booking-info p { color: #ccc; margin-bottom: 20px; font-size: 14px;}
+
+    form { display: grid; gap: 18px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: grid; gap: 6px; }
+    label { font-size: 11px; color: #aaa; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;}
+    
+    input, select, textarea { width: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 6px; background: #0a0a0a; color: #fff; font-size: 14px; outline: none; transition: 0.3s;}
+    input:focus, select:focus, textarea:focus { border-color: #fff; background: #111; }
+    textarea { resize: vertical; min-height: 100px; }
+    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+
+    .privacy-box { display: grid; gap: 10px; padding: 20px; background: #111; border: 1px solid var(--line); border-radius: 8px; margin-top: 10px;}
+    .check-wrap { display: flex; align-items: flex-start; gap: 12px; }
+    .check-wrap input { width: 18px; height: 18px; margin-top: 2px; accent-color: #fff; cursor: pointer; }
+    .check-wrap label { font-size: 12px; font-weight: normal; color: #ccc; line-height: 1.6; cursor: pointer;}
+
+    .btn-reserva { width: 100%; padding: 20px; font-size: 13px; letter-spacing: 3px; margin-top: 10px;}
+
+    .status { display: none; padding: 15px; border-radius: 6px; font-size: 13px; text-align: center; font-weight: bold;}
+    .status.show { display: block; }
+    .status.error { background: #2a0808; color: var(--danger); border: 1px solid #5a1a1a; }
+
+    footer { padding: 40px 0; text-align: center; color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; border-top: 1px solid var(--line); margin-top: 40px;}
+
+    /* MODAL GALERÍA Y ENVIANDO */
+    .modal, .sending-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.98); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 9999; }
+    .modal.show, .sending-overlay.show { display: flex; }
+    .modal-box { position: relative; max-width: 900px; width: 100%; display: grid; justify-items: center; gap: 15px; }
+    .modal-box img { max-width: 100%; max-height: 85vh; border-radius: 8px; border: 1px solid #333; }
+    .modal-close { position: absolute; top: -15px; right: 0; width: 40px; height: 40px; border: 1px solid #333; border-radius: 999px; background: #000; color: #fff; font-size: 24px; cursor: pointer; transition: 0.3s;}
+    .modal-close:hover { background: #fff; color: #000;}
+    .modal-caption { color: #fff; text-align: center; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; font-size: 12px;}
+
+    .sending-card { width: min(100%, 450px); background: #0a0a0a; border: 1px solid #333; border-radius: 16px; padding: 40px 24px; text-align: center;}
+    .sending-icon { font-size: 56px; margin-bottom: 15px; animation: floatIcon 1.7s ease-in-out infinite; }
+    @keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .sending-card h3 { font-family: 'Playfair Display', serif; font-size: 26px; color: #fff; margin-bottom: 10px;}
+    .sending-card p { color: #aaa; font-size: 13px;}
+  </style>
+</head>
+<body>
+
+  <div class="magic-transition" id="magicTransition">
+    <div class="spinning-glass">🍷</div>
+    <div class="magic-text">Brecasur te encantará...</div>
+  </div>
+
+  <div id="view-home" class="view-section active" style="display: block;">
+    <div class="hero-overlay">
+      <div class="container">
+        <div class="hero-card">
+          <div class="subtitle">Bar y Restaurante</div>
+          <h1>Brecasur </h1>
+          <p class="hero-desc">Sabor, ambiente y buenos momentos en un solo lugar. Disfruta de una experiencia agradable con buena comida y atención cercana en el municipio de Marcovia.</p>
+
+          <div class="hero-action-grid">
+            <button class="btn btn-action-magic" data-target="view-reservas">RESERVA UNA MESA</button>
+            <button class="btn btn-action-magic" data-url="https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras">CÓMO LLEGAR</button>
+            <button class="btn btn-action-magic" data-target="view-contacto">CONTÁCTANOS</button>
+            <button class="btn btn-action-magic" data-target="view-galeria">GALERÍA BRECASUR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-reservas" class="view-section">
+    <div class="subpage-bg">
+      <div class="container">
+        <button class="btn-back" onclick="goHome()">← Volver al Menú</button>
+
+        <div class="section-head">
+          <span class="eyebrow">Asegura tu lugar en Marcovia</span>
+          <h2>Reservas Brecasur</h2>
+          <p>Selecciona la fecha y envía tu solicitud directamente por WhatsApp para ser atendido por nuestro equipo.</p>
+        </div>
+
+        <div class="booking-layout">
+          <div class="card booking-info">
+            <h3>Información de Reservas</h3>
+            <p>Queremos que el proceso de reserva sea rápido, claro y cómodo para cada cliente que nos visita en Marcovia.</p>
+
+            <div class="address-box" style="margin-bottom: 20px;">
+              <strong>Ubicación Oficial</strong>
+              <p style="margin-bottom: 15px;"> Marcovia - Choluteca, Honduras.<br>Colonia Care, Renacer Marcovia, Frente al rótulo en Plaza Verde Oliva.</p>
+              
+              <button class="btn btn-action-magic" data-url="https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras" style="width: 100%; padding: 12px; font-size: 10px;">📍 CÓMO LLEGAR (MAPA)</button>
+            </div>
+
+            <div class="address-box" style="margin-bottom: 20px;">
+              <strong>Horarios de Atención</strong>
+              <p>Lunes a sábado: 11:00 AM – 11:59 PM<br>Domingo: 5:00 PM – 11:00 PM</p>
+            </div>
+          </div>
+
+          <div class="card booking-form">
+            <h3>Solicitar Mesa</h3>
+
+            <form id="reservaForm" novalidate>
+              <div id="formStatusReserva" class="status" aria-live="polite"></div>
+
+              <div class="form-group">
+                <label for="r_nombre">Nombre completo</label>
+                <input type="text" id="r_nombre" required />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="r_tel">Teléfono</label>
+                  <input type="tel" id="r_tel" inputmode="tel" required />
+                </div>
+                <div class="form-group">
+                  <label for="r_personas">N.º de personas</label>
+                  <select id="r_personas" required>
+                    <option value="" disabled selected>Seleccione</option>
+                    <option value="1">1 </option>
+                    <option value="2">2 </option>
+                    <option value="3">3 </option>
+                    <option value="4">4 </option>
+                    <option value="5">5 </option>
+                    <option value="6">6 </option>
+                    <option value="7">7 </option>
+                    <option value="8">8 </option>
+                    <option value="9">9 </option>
+                    <option value="10">10 </option>
+                    <option value="11">11 </option>
+                    <option value="12">12 </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="r_fecha">Fecha</label>
+                  <input type="date" id="r_fecha" required />
+                  <div class="field-help">Selecciona una fecha para ver las horas.</div>
+                </div>
+                <div class="form-group">
+                  <label for="r_hora">Hora</label>
+                  <select id="r_hora" required disabled>
+                    <option value="">Seleccione fecha primero</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="privacy-box">
+                <div class="check-wrap">
+                  <input type="checkbox" id="r_privacy" required />
+                  <label for="r_privacy">Consiento el tratamiento de mis datos de acuerdo con el Art. 76 de la Constitución de la República de Honduras y la Ley de Comercio Electrónico para la gestión de esta reserva vía WhatsApp.</label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-reserva">RESERVAR</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <footer><div class="container">© <span class="year-span"></span> Brecasur Marcovia</div></footer>
+    </div>
+  </div>
+
+  <div id="view-contacto" class="view-section">
+    <div class="subpage-bg">
+      <div class="container">
+        <button class="btn-back" onclick="goHome()">← Volver al Menú</button>
+
+        <div class="section-head">
+          <span class="eyebrow">Comunicación Directa</span>
+          <h2>Contáctanos</h2>
+          <p>Déjanos tus comentarios, consultas o sugerencias. Valoramos tu experiencia en Brecasur Marcovia.</p>
+        </div>
+
+        <div class="contact-layout">
+          <div class="contact-info">
+            <h3>Sobre Brecasur</h3>
+            <p>Somos un restaurante familiar dedicado a ofrecer sabores locales auténticos en un ambiente acogedor. Nuestra pasión es la buena comida y el servicio cercano, creando momentos memorables en el corazón de Marcovia.</p>
+            
+            <div class="address-box">
+              <strong>Nuestra Dirección</strong>
+              <p style="margin-bottom: 15px;">Marcovia, Honduras.<br>Colonia Care, Renacer Marcovia, Frente al rótulo en Plaza Verde Oliva.</p>
+              <button class="btn btn-action-magic" data-url="https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras" style="width: 100%; padding: 12px; font-size: 10px;">📍 CÓMO LLEGAR (MAPA)</button>
+            </div>
+          </div>
+
+          <div class="card booking-form">
+            <form id="contactoForm" novalidate>
+              <div id="formStatusContacto" class="status" aria-live="polite"></div>
+
+              <div class="form-group">
+                <label for="c_nombre">Nombre Completo</label>
+                <input type="text" id="c_nombre" required />
+              </div>
+
+              <div class="form-group">
+                <label for="c_motivo">Motivo de consulta</label>
+                <textarea id="c_motivo" required></textarea>
+              </div>
+
+              <div class="form-group" style="margin-top: 5px;">
+                <label>Califica tu experiencia</label>
+                <div class="star-rating">
+                  <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 estrellas">★</label>
+                  <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 estrellas">★</label>
+                  <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 estrellas">★</label>
+                  <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 estrellas">★</label>
+                  <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 estrella">★</label>
+                </div>
+              </div>
+
+              <div class="privacy-box">
+                <div class="check-wrap">
+                  <input type="checkbox" id="c_privacy" required />
+                  <label for="c_privacy">Consiento el tratamiento de mis datos de acuerdo con el Art. 76 de la Constitución de la República de Honduras y la Ley de Comercio Electrónico para enviar este mensaje.</label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-reserva">ENVIAR A WHATSAPP</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <footer><div class="container">© <span class="year-span"></span> Brecasur Marcovia</div></footer>
+    </div>
+  </div>
+
+  <div id="view-galeria" class="view-section">
+    <div class="subpage-bg">
+      <div class="container">
+        <button class="btn-back" onclick="goHome()">← Volver al Menú</button>
+
+        <div class="section-head">
+          <span class="eyebrow">La Magia de Brecasur</span>
+          <h2>Galería Brecasur</h2>
+          <p>Un rincón mágico en Marcovia donde los sabores cuentan historias y cada bocado se convierte en un recuerdo inolvidable.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item" data-img="bb.jpg" data-caption="Fachada Brecasur Marcovia">
+            <img src="bb.jpg" alt="Brecasur" loading="lazy" />
+            <div class="gallery-label">El Local</div>
+          </div>
+          <div class="gallery-item" data-img="b2.jpg" data-caption="Detalles que enamoran">
+            <img src="b2.jpg" alt="Interior" loading="lazy" />
+            <div class="gallery-label">Interior</div>
+          </div>
+          <div class="gallery-item" data-img="b3.jpg" data-caption="Nuestra Barra Mágica">
+            <img src="b3.jpg" alt="Barra" loading="lazy" />
+            <div class="gallery-label">Barra</div>
+          </div>
+          <div class="gallery-item" data-img="b4.jpg" data-caption="Ambiente Inolvidable">
+            <img src="b4.jpg" alt="Ambiente" loading="lazy" />
+            <div class="gallery-label">Ambiente</div>
+          </div>
+        </div>
+      </div>
+      <footer style="margin-top: 80px;"><div class="container">© <span class="year-span"></span> Brecasur Marcovia</div></footer>
+    </div>
+  </div>
+
+
+  <div class="modal" id="galleryModal" aria-hidden="true">
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="closeModalBtn" aria-label="Cerrar galería">×</button>
+      <img id="modalImg" src="" alt="" />
+      <div class="modal-caption" id="modalCaption"></div>
+    </div>
+  </div>
+
+  <div class="sending-overlay" id="sendingOverlay" aria-hidden="true">
+    <div class="sending-card">
+      <div class="sending-icon">🥂</div>
+      <h3>Conectando</h3>
+      <p>Abriendo WhatsApp para comunicarte con Brecasur Marcovia...</p>
+    </div>
+  </div>
+
+  <script>
+    // Año dinámico en los footers
+    document.querySelectorAll(".year-span").forEach(el => el.textContent = new Date().getFullYear());
+    const WHATSAPP_NUMBER = "50433224825";
+
+    // ==========================================
+    // SISTEMA DE VISTAS Y TRANSICIÓN (CORREGIDO)
+    // ==========================================
+    const magicTransition = document.getElementById('magicTransition');
+
+    function triggerMagicTransition(callback) {
+      magicTransition.classList.add('active');
+      setTimeout(() => {
+        callback();
+        setTimeout(() => {
+          magicTransition.classList.remove('active');
+        }, 500);
+      }, 1500);
+    }
+
+    function switchView(viewId) {
+      // 1. Ocultar absolutamente todas las secciones de inmediato
+      document.querySelectorAll('.view-section').forEach(el => {
+        el.classList.remove('active');
+        el.style.display = 'none'; 
+      });
+      
+      // 2. Mostrar la nueva sección solicitada
+      const target = document.getElementById(viewId);
+      if (target) {
+        target.style.display = 'block';
+        // Un pequeño delay para que el navegador procese el display: block antes de animar
+        setTimeout(() => target.classList.add('active'), 40);
+      }
+      
+      window.scrollTo(0, 0);
+    }
+
+    function goHome() {
+      triggerMagicTransition(() => {
+        switchView('view-home');
+      });
+    }
+
+    // Eventos de los botones principales y enlaces a mapa
+    document.querySelectorAll('.btn-action-magic').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = btn.getAttribute('data-url');
+        const targetView = btn.getAttribute('data-target');
+
+        triggerMagicTransition(() => {
+          if (targetView) {
+            switchView(targetView);
+          } else if (url) {
+            window.open(url, '_blank');
+          }
+        });
+      });
+    });
+
+
+    // ==========================================
+    // OVERLAYS Y MODALES DE GALERÍA
+    // ==========================================
+    const galleryModal = document.getElementById("galleryModal");
+    const modalImg = document.getElementById("modalImg");
+    const modalCaption = document.getElementById("modalCaption");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const galleryItems = document.querySelectorAll(".gallery-item");
+    const sendingOverlay = document.getElementById("sendingOverlay");
+
+    function openModalGal(src, caption = "") {
+      modalImg.src = src;
+      modalImg.alt = caption;
+      modalCaption.textContent = caption;
+      galleryModal.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModalGal() {
+      galleryModal.classList.remove("show");
+      modalImg.src = "";
+      modalCaption.textContent = "";
+      document.body.style.overflow = "";
+    }
+
+    galleryItems.forEach((item) => {
+      item.addEventListener("click", () => { openModalGal(item.dataset.img, item.dataset.caption); });
+    });
+
+    closeModalBtn.addEventListener("click", closeModalGal);
+    galleryModal.addEventListener("click", (e) => { if (e.target === galleryModal) closeModalGal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && galleryModal.classList.contains("show")) closeModalGal(); });
+
+    function openSendingOverlay() {
+      sendingOverlay.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSendingOverlay() {
+      sendingOverlay.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    // ==========================================
+    // LÓGICA FORMULARIO DE RESERVAS
+    // ==========================================
+    const fechaInput = document.getElementById("r_fecha");
+    const horaSelect = document.getElementById("r_hora");
+    const formReserva = document.getElementById("reservaForm");
+    const statusReserva = document.getElementById("formStatusReserva");
+
+    function pad(num) { return String(num).padStart(2, "0"); }
+
+    function formatMinutesToLabel(totalMinutes) {
+      const hh24 = Math.floor(totalMinutes / 60);
+      const mm = totalMinutes % 60;
+      const ampm = hh24 >= 12 ? "PM" : "AM";
+      let hh12 = hh24 % 12;
+      if (hh12 === 0) hh12 = 12;
+      return `${hh12}:${pad(mm)} ${ampm}`;
+    }
+
+    function buildTimeOptions(startMinutes, endMinutes, stepMinutes = 30) {
+      const options = [];
+      for (let minutes = startMinutes; minutes <= endMinutes; minutes += stepMinutes) {
+        options.push({ value: formatMinutesToLabel(minutes), label: formatMinutesToLabel(minutes) });
+      }
+      return options;
+    }
+
+    function getAllowedRangeByDate(dateObj) {
+      const day = dateObj.getDay();
+      if (day === 0) { return { start: 17 * 60, end: 21 * 60 }; }
+      return { start: 11 * 60 + 30, end: 22 * 60 };
+    }
+
+    function formatDateForDisplay(dateValue) {
+      if (!dateValue) return "";
+      const dateObj = new Date(dateValue + "T00:00:00");
+      const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+      const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+      return `${dias[dateObj.getDay()]} ${String(dateObj.getDate()).padStart(2, "0")} de ${meses[dateObj.getMonth()]} de ${dateObj.getFullYear()}`;
+    }
+
+    const now = new Date();
+    const localISODate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().split("T")[0];
+    fechaInput.min = localISODate;
+
+    fechaInput.addEventListener("change", (e) => {
+      statusReserva.className = "status";
+      const dateValue = e.target.value;
+      if (!dateValue) {
+        horaSelect.innerHTML = '<option value="">Seleccione fecha primero</option>';
+        horaSelect.disabled = true;
+        return;
+      }
+
+      const selectedDate = new Date(dateValue + "T00:00:00");
+      const range = getAllowedRangeByDate(selectedDate);
+      const options = buildTimeOptions(range.start, range.end, 30);
+
+      horaSelect.innerHTML = '<option value="" disabled selected>Seleccione Hora</option>';
+      options.forEach((opt) => {
+        horaSelect.innerHTML += `<option value="${opt.value}">${opt.label}</option>`;
+      });
+      horaSelect.disabled = false;
+    });
+
+    formReserva.addEventListener("submit", function (e) {
+      e.preventDefault();
+      statusReserva.className = "status";
+
+      const nombre = document.getElementById("r_nombre").value.trim();
+      const tel = document.getElementById("r_tel").value.trim();
+      const personas = document.getElementById("r_personas").value;
+      const fecha = document.getElementById("r_fecha").value;
+      const hora = document.getElementById("r_hora").value;
+      const privacy = document.getElementById("r_privacy").checked;
+
+      if (!nombre || !tel || !personas || !fecha || !hora) {
+        statusReserva.textContent = "Por favor, complete todos los campos de la reserva.";
+        statusReserva.className = "status show error";
+        return;
+      }
+      if (!privacy) {
+        statusReserva.textContent = "Debe aceptar el tratamiento de datos legales.";
+        statusReserva.className = "status show error";
+        return;
+      }
+
+      const fechaFormateada = formatDateForDisplay(fecha);
+      const mensaje = `Hola Brecasur Marcovia, deseo solicitar una reserva.\n\n🥂 Reserva\n👤 ${nombre}\n📞 ${tel}\n👥 ${personas}\n📅 ${fechaFormateada}\n🕒 ${hora}\n\nQuedo pendiente de confirmación.`;
+      
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+
+      openSendingOverlay();
+      setTimeout(() => {
+        window.open(url, "_blank");
+        closeSendingOverlay();
+      }, 1200);
+    });
+
+    // ==========================================
+    // LÓGICA FORMULARIO DE CONTACTO (ESTRELLAS)
+    // ==========================================
+    const formContacto = document.getElementById("contactoForm");
+    const statusContacto = document.getElementById("formStatusContacto");
+
+    formContacto.addEventListener("submit", function(e) {
+      e.preventDefault();
+      statusContacto.className = "status";
+
+      const nombre = document.getElementById("c_nombre").value.trim();
+      const motivo = document.getElementById("c_motivo").value.trim();
+      const privacy = document.getElementById("c_privacy").checked;
+      
+      const ratingElement = document.querySelector('input[name="rating"]:checked');
+      const rating = ratingElement ? ratingElement.value : null;
+
+      if (!nombre || !motivo) {
+        statusContacto.textContent = "Por favor, ingrese su nombre y motivo de consulta.";
+        statusContacto.className = "status show error";
+        return;
+      }
+      if (!rating) {
+        statusContacto.textContent = "Por favor, seleccione una calificación en estrellas.";
+        statusContacto.className = "status show error";
+        return;
+      }
+      if (!privacy) {
+        statusContacto.textContent = "Debe aceptar el tratamiento de datos legales.";
+        statusContacto.className = "status show error";
+        return;
+      }
+
+      const mensaje = `Hola Brecasur Marcovia, mi nombre es ${nombre}.\n\nTe doy ${rating} estrellas de calificación, y te contacto porque: ${motivo}`;
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+
+      openSendingOverlay();
+      setTimeout(() => {
+        window.open(url, "_blank");
+        closeSendingOverlay();
+        formContacto.reset();
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
