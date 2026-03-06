@@ -18,6 +18,11 @@
     window.onload = function() {
       window.scrollTo(0, 0);
     };
+    // Desocultar overlays si el usuario regresa con el botón "Atrás" del móvil
+    window.addEventListener("pageshow", function() {
+      document.getElementById('sendingOverlay').classList.remove('show');
+      document.getElementById('magicTransition').classList.remove('active');
+    });
   </script>
 
   <style>
@@ -138,7 +143,8 @@
     .form-group { display: grid; gap: 6px; }
     label { font-size: 11px; color: #aaa; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;}
     
-    input, select, textarea { width: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 6px; background: #0a0a0a; color: #fff; font-size: 14px; outline: none; transition: 0.3s;}
+    /* Evitar zoom en iOS Safari */
+    input, select, textarea { width: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 6px; background: #0a0a0a; color: #fff; font-size: 16px; outline: none; transition: 0.3s; appearance: none; -webkit-appearance: none;}
     input:focus, select:focus, textarea:focus { border-color: #fff; background: #111; }
     textarea { resize: vertical; min-height: 100px; }
     input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
@@ -183,8 +189,9 @@
     <div class="hero-overlay">
       <div class="container">
         <div class="hero-card">
+          <span class="eyebrow">Exclusividad en Marcovia</span>
           <div class="subtitle">Bar y Restaurante</div>
-          <h1>Brecasur </h1>
+          <h1>Brecasur Marcovia</h1>
           <p class="hero-desc">Sabor, ambiente y buenos momentos en un solo lugar. Disfruta de una experiencia agradable con buena comida y atención cercana en el municipio de Marcovia.</p>
 
           <div class="hero-action-grid">
@@ -216,9 +223,9 @@
 
             <div class="address-box" style="margin-bottom: 20px;">
               <strong>Ubicación Oficial</strong>
-              <p style="margin-bottom: 15px;"> Marcovia - Choluteca, Honduras.<br>Colonia Care, Renacer Marcovia, Frente al rótulo en Plaza Verde Oliva.</p>
+              <p style="margin-bottom: 15px;">7PR5+2GG Marcovia, Honduras.<br>Colonia Renacer, Frente al rótulo en Plaza Verde Oliva.</p>
               
-              <button class="btn btn-action-magic" data-url="https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras" style="width: 100%; padding: 12px; font-size: 10px;">📍 CÓMO LLEGAR (MAPA)</button>
+              <button class="btn" onclick="window.location.href='https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras'" style="width: 100%; padding: 12px; font-size: 10px;">📍 CÓMO LLEGAR (MAPA)</button>
             </div>
 
             <div class="address-box" style="margin-bottom: 20px;">
@@ -247,18 +254,18 @@
                   <label for="r_personas">N.º de personas</label>
                   <select id="r_personas" required>
                     <option value="" disabled selected>Seleccione</option>
-                    <option value="1">1 </option>
-                    <option value="2">2 </option>
-                    <option value="3">3 </option>
-                    <option value="4">4 </option>
-                    <option value="5">5 </option>
-                    <option value="6">6 </option>
-                    <option value="7">7 </option>
-                    <option value="8">8 </option>
-                    <option value="9">9 </option>
-                    <option value="10">10 </option>
-                    <option value="11">11 </option>
-                    <option value="12">12 </option>
+                    <option value="1">1 Persona</option>
+                    <option value="2">2 Personas</option>
+                    <option value="3">3 Personas</option>
+                    <option value="4">4 Personas</option>
+                    <option value="5">5 Personas</option>
+                    <option value="6">6 Personas</option>
+                    <option value="7">7 Personas</option>
+                    <option value="8">8 Personas</option>
+                    <option value="9">9 Personas</option>
+                    <option value="10">10 Personas</option>
+                    <option value="11">11 Personas</option>
+                    <option value="12">12 Personas</option>
                   </select>
                 </div>
               </div>
@@ -311,8 +318,8 @@
             
             <div class="address-box">
               <strong>Nuestra Dirección</strong>
-              <p style="margin-bottom: 15px;">Marcovia, Honduras.<br>Colonia Care, Renacer Marcovia, Frente al rótulo en Plaza Verde Oliva.</p>
-              <button class="btn btn-action-magic" data-url="https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras" style="width: 100%; padding: 12px; font-size: 10px;">📍 CÓMO LLEGAR (MAPA)</button>
+              <p style="margin-bottom: 15px;">7PR5+2GG Marcovia, Honduras.<br>Colonia Renacer, Frente al rótulo en Plaza Verde Oliva.</p>
+              <button class="btn" onclick="window.location.href='https://www.google.com/maps/search/?api=1&query=7PR5%2B2GG+Marcovia,+Honduras'" style="width: 100%; padding: 12px; font-size: 10px;">📍 CÓMO LLEGAR (MAPA)</button>
             </div>
           </div>
 
@@ -414,7 +421,7 @@
     const WHATSAPP_NUMBER = "50433224825";
 
     // ==========================================
-    // SISTEMA DE VISTAS Y TRANSICIÓN (CORREGIDO)
+    // SISTEMA DE VISTAS Y TRANSICIÓN (CORREGIDO PARA IOS)
     // ==========================================
     const magicTransition = document.getElementById('magicTransition');
 
@@ -463,7 +470,8 @@
           if (targetView) {
             switchView(targetView);
           } else if (url) {
-            window.open(url, '_blank');
+            // FIX PARA APPLE / IOS: Usar window.location.href en lugar de window.open para evitar bloqueos
+            window.location.href = url;
           }
         });
       });
@@ -607,7 +615,8 @@
 
       openSendingOverlay();
       setTimeout(() => {
-        window.open(url, "_blank");
+        // FIX PARA APPLE / IOS
+        window.location.href = url;
         closeSendingOverlay();
       }, 1200);
     });
@@ -651,7 +660,8 @@
 
       openSendingOverlay();
       setTimeout(() => {
-        window.open(url, "_blank");
+        // FIX PARA APPLE / IOS
+        window.location.href = url;
         closeSendingOverlay();
         formContacto.reset();
       }, 1200);
