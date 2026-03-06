@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Bar y Restaurante Brecasur | Marcovia</title>
+  <title>Bar y Restaurante Brecasur | Lujo y Sabor</title>
   <meta name="description" content="Bar y Restaurante Brecasur en Marcovia, Honduras. Reserva tu mesa y vive una experiencia gastronómica única." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -120,14 +120,14 @@
     .star-rating label { font-size: 35px; color: #333; cursor: pointer; transition: 0.2s; }
     .star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: var(--gold); }
 
-    /* GALERÍA MÁGICA */
-    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; }
+    /* GALERÍA MÁGICA - FOTOS MÁS PEQUEÑAS */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 800px; margin: 0 auto; }
     .gallery-item { position: relative; overflow: hidden; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow); aspect-ratio: 1/1; border: 1px solid var(--line); }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(0.25, 0.8, 0.25, 1); }
     .gallery-item::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); opacity: 0; transition: 0.3s; z-index: 1;}
     .gallery-item:hover img { transform: scale(1.1); }
     .gallery-item:hover::after { opacity: 1; }
-    .gallery-label { position: absolute; left: 15px; right: 15px; bottom: 15px; color: #fff; font-size: 14px; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 1px; z-index: 10; opacity: 0; transform: translateY(10px); transition: 0.4s;}
+    .gallery-label { position: absolute; left: 10px; right: 10px; bottom: 10px; color: #fff; font-size: 11px; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 1px; z-index: 10; opacity: 0; transform: translateY(10px); transition: 0.4s;}
     .gallery-item:hover .gallery-label { opacity: 1; transform: translateY(0); }
 
     /* RESERVAS FORMULARIO */
@@ -144,20 +144,14 @@
     .form-group { display: grid; gap: 6px; }
     label { font-size: 11px; color: #aaa; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;}
     
-    /* INPUTS SEPARADOS PARA EVITAR CONFLICTO CON CHECKBOX */
-    input[type="text"], input[type="tel"], input[type="date"], select, textarea { 
-      width: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 6px; background: #0a0a0a; color: #fff; font-size: 16px; outline: none; transition: 0.3s; appearance: none; -webkit-appearance: none;
-    }
-    input[type="text"]:focus, input[type="tel"]:focus, input[type="date"]:focus, select:focus, textarea:focus { 
-      border-color: #fff; background: #111; 
-    }
+    input, select, textarea { width: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 6px; background: #0a0a0a; color: #fff; font-size: 14px; outline: none; transition: 0.3s; appearance: none; -webkit-appearance: none;}
+    input:focus, select:focus, textarea:focus { border-color: #fff; background: #111; }
     textarea { resize: vertical; min-height: 100px; }
     input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
 
     .privacy-box { display: grid; gap: 10px; padding: 20px; background: #111; border: 1px solid var(--line); border-radius: 8px; margin-top: 10px;}
     .check-wrap { display: flex; align-items: flex-start; gap: 12px; }
     
-    /* ESTILO ESPECÍFICO DEL CHECKBOX PARA QUE SEA CLICKEABLE */
     .check-wrap input[type="checkbox"] { 
       appearance: auto; -webkit-appearance: auto; width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: #fff;
     }
@@ -198,6 +192,7 @@
     <div class="hero-overlay">
       <div class="container">
         <div class="hero-card">
+          <span class="eyebrow">Exclusividad en Marcovia</span>
           <div class="subtitle">Bar y Restaurante</div>
           <h1>Brecasur Marcovia</h1>
           <p class="hero-desc">Sabor, ambiente y buenos momentos en un solo lugar. Disfruta de una experiencia agradable con buena comida y atención cercana en el municipio de Marcovia.</p>
@@ -264,16 +259,18 @@
                   <label for="r_personas">N.º de personas</label>
                   <select id="r_personas" required>
                     <option value="" disabled selected>Seleccione</option>
-                    <option value="1">1 </option>
-                    <option value="2">2 </option>
-                    <option value="3">3 </option>
-                    <option value="4">4 </option>
-                    <option value="5">5 </option>
-                    <option value="6">6 </option>
-                    <option value="7">7 </option>
-                    <option value="8">8 </option>
-                    <option value="9">9 </option>
-                    <option value="10">10 </option>
+                    <option value="1">1 Persona</option>
+                    <option value="2">2 Personas</option>
+                    <option value="3">3 Personas</option>
+                    <option value="4">4 Personas</option>
+                    <option value="5">5 Personas</option>
+                    <option value="6">6 Personas</option>
+                    <option value="7">7 Personas</option>
+                    <option value="8">8 Personas</option>
+                    <option value="9">9 Personas</option>
+                    <option value="10">10 Personas</option>
+                    <option value="11">11 Personas</option>
+                    <option value="12">12 Personas</option>
                   </select>
                 </div>
               </div>
@@ -363,7 +360,7 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-reserva">ENVIAR</button>
+              <button type="submit" class="btn btn-reserva">ENVIAR A WHATSAPP</button>
             </form>
           </div>
         </div>
@@ -405,7 +402,6 @@
       <footer style="margin-top: 80px;"><div class="container">© <span class="year-span"></span> Brecasur Marcovia</div></footer>
     </div>
   </div>
-
 
   <div class="modal" id="galleryModal" aria-hidden="true">
     <div class="modal-box">
@@ -477,13 +473,11 @@
           if (targetView) {
             switchView(targetView);
           } else if (url) {
-            // FIX PARA APPLE / IOS
             window.location.href = url;
           }
         });
       });
     });
-
 
     // ==========================================
     // OVERLAYS Y MODALES DE GALERÍA
@@ -616,7 +610,7 @@
       }
 
       const fechaFormateada = formatDateForDisplay(fecha);
-      const mensaje = `Hola Brecasur, deseo solicitar una reserva.\n\n🥂 Reserva\n👤 ${nombre}\n📞 ${tel}\n👥 ${personas}\n📅 ${fechaFormateada}\n🕒 ${hora}\n\nQuedo pendiente de confirmación.`;
+      const mensaje = `Hola Brecasur Marcovia, deseo solicitar una reserva.\n\n🥂 Reserva\n👤 ${nombre}\n📞 ${tel}\n👥 ${personas} personas\n📅 ${fechaFormateada}\n🕒 ${hora}\n\nQuedo pendiente de confirmación.`;
       
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
 
@@ -660,7 +654,7 @@
         return;
       }
 
-      const mensaje = `Hola Brecasur, mi nombre es ${nombre}.\n\nTe doy ${rating} estrellas de calificación, y te contacto porque: ${motivo}`;
+      const mensaje = `Hola Brecasur Marcovia, mi nombre es ${nombre}.\n\nTe doy ${rating} estrellas de calificación, y te contacto porque: ${motivo}`;
 
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
 
@@ -674,4 +668,3 @@
   </script>
 </body>
 </html>
-
